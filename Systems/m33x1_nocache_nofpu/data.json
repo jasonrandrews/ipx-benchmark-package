@@ -1,0 +1,21 @@
+{
+    "package_id": "hal_m33x1_nocache_nofpu_package",
+    "package_version": "2_0_2022.06.23",
+    "systems": {
+        "m33x1_nocache_nofpu": {
+            "cpu": "Cortex-M33",
+            "compilers": [
+                "GCC",
+                "AC6"
+            ],
+            "applications": [
+                "dhrystone",
+                "hello",
+                "coremark",
+                "whetstone",
+                "matrix-add"
+            ],
+            "assertions": []
+        }
+    }
+}

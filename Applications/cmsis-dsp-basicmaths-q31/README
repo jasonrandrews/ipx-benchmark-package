@@ -1,0 +1,15 @@
+CMSIS DSP Application README
+
+This application is a CMSIS DSP application built for simulation in the SoC
+developer cloud. The sources included here are for informational purposes ONLY.
+
+Built versions of this application are provided for the systems it supports. These
+can be found in the system directories at:
+- <app tarball>/Systems/<cmsis dsp system>/
+
+The top level README indicates which systems support CMSIS DSP applications.
+
+
+This application requires the CMSIS repository to be built, however building the
+application is outside the scope of this application package. For reference, the CMSIS
+github repository can be found here: https://github.com/ARM-software/CMSIS_5

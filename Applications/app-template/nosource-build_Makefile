@@ -1,0 +1,20 @@
+#
+# Copyright (c) 2021 Arm Limited. All rights reserved.
+#
+
+# Makefile for an application distributed as an elf file without source.
+
+# Set up the common directory
+COMMON=../_common
+
+include $(COMMON)/makefile/makefile-shared.inc
+
+# Some systems may have special requirements for postprocessing the application. One situation
+# where this happens is when an application needs to be split into multiple hex files. To support this,
+# conditionally include a system makefile. This must be included after the shared makefile as it could
+# overwrite some variables (such as TARGET_HEX).
+-include ../makefile-system.inc
+
+OBJ_FILES =
+
+CLEAN_FILES = $(TARGET_PAR) $(TARGET_SET) $(TARGET_MEM) $(TARGET_HEX) $(TARGET_BIN) $(COMPILER_DIR)/*.log

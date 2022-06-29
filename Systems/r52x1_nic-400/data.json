@@ -1,0 +1,21 @@
+{
+    "package_id": "hal_r52x1_nic-400_package",
+    "package_version": "2_0_2022.06.23",
+    "systems": {
+        "r52x1_nic-400": {
+            "cpu": "Cortex-R52",
+            "compilers": [
+                "GCC",
+                "AC6"
+            ],
+            "applications": [
+                "dhrystone",
+                "hello",
+                "coremark",
+                "whetstone",
+                "matrix-add"
+            ],
+            "assertions": []
+        }
+    }
+}

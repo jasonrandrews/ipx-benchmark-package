@@ -1,0 +1,21 @@
+{
+    "package_id": "hal_m85x1_nic-400_package",
+    "package_version": "2_0_2022.06.23",
+    "systems": {
+        "m85x1_nic-400": {
+            "cpu": "Cortex-M85",
+            "compilers": [
+                "GCC",
+                "AC6"
+            ],
+            "applications": [
+                "dhrystone",
+                "hello",
+                "coremark",
+                "whetstone",
+                "matrix-add"
+            ],
+            "assertions": []
+        }
+    }
+}

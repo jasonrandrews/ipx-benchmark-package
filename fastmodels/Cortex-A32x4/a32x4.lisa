@@ -1,0 +1,35 @@
+/*
+ * Copyright 2007 ARM Limited. All rights reserved.
+ * Copyright 2008 ARM Limited. All rights reserved.
+ */
+
+component a32x4
+{
+    composition
+    {
+	armcortexa32x4ct : ARMCortexA32x4CT("PERIPHBASE"=0xB0000000, "BROADCASTINNER"=0,"BROADCASTOUTER"=0,"BROADCASTCACHEMAINT"=0);
+        pvbus2ambapv : PVBus2AMBAPV();
+        Memory : RAMDevice();
+        Clock100MHz : ClockDivider(mul=100000000);
+        Clock1Hz : MasterClock();
+        BusDecoder : PVBusDecoder()
+    }
+    
+    connection
+    {
+        Clock1Hz.clk_out => Clock100MHz.clk_in;
+        pvbus2ambapv.amba_pv_m => self.amba_pv_m;
+	Clock100MHz.clk_out => armcortexa32x4ct.clk_in;
+	armcortexa32x4ct.pvbus_m0 => BusDecoder.pvbus_s;
+	BusDecoder.pvbus_m_range[0x0..0xfffffff] => Memory.pvbus;
+	BusDecoder.pvbus_m_range[0x13000000..0x1300ffff] => pvbus2ambapv.pvbus_s;
+    }
+
+    properties
+    {
+        component_type = "System";
+    }
+    master port<AMBAPV> amba_pv_m;
+    
+}
+

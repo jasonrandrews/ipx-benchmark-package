@@ -1,0 +1,21 @@
+{
+    "package_id": "hal_a53x2_nic-400_32kb_package",
+    "package_version": "2_0_2022.06.23",
+    "systems": {
+        "a53x2_nic-400_32kb": {
+            "cpu": "Cortex-A53",
+            "compilers": [
+                "GCC",
+                "AC6"
+            ],
+            "applications": [
+                "dhrystone",
+                "hello",
+                "coremark",
+                "whetstone",
+                "matrix-add"
+            ],
+            "assertions": []
+        }
+    }
+}

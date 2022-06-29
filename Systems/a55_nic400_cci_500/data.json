@@ -1,0 +1,21 @@
+{
+    "package_id": "hal_a55_nic400_cci_500_package",
+    "package_version": "2_0_2022.06.23",
+    "systems": {
+        "a55_nic400_cci_500": {
+            "cpu": "Cortex-A55",
+            "compilers": [
+                "GCC",
+                "AC6"
+            ],
+            "applications": [
+                "dhrystone",
+                "hello",
+                "coremark",
+                "whetstone",
+                "matrix-add"
+            ],
+            "assertions": []
+        }
+    }
+}

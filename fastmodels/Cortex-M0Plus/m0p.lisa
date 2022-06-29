@@ -1,0 +1,36 @@
+/*
+ * Copyright 2007 ARM Limited. All rights reserved.
+ * Copyright 2008 ARM Limited. All rights reserved.
+ */
+
+component m0p
+{
+    composition
+    {
+	datamem : RAMDevice();
+	armcortexm0plusct : ARMCortexM0PlusCT();
+        pvbus2ambapv : PVBus2AMBAPV();
+        Memory : RAMDevice();
+        Clock100MHz : ClockDivider(mul=100000000);
+        Clock1Hz : MasterClock();
+        BusDecoder : PVBusDecoder()
+    }
+    
+    connection
+    {
+        Clock1Hz.clk_out => Clock100MHz.clk_in;
+        BusDecoder.pvbus_m_range[0x0..0x000fffff] => Memory.pvbus;
+        pvbus2ambapv.amba_pv_m => self.amba_pv_m;
+        BusDecoder.pvbus_m_range[0x40000000..0x40001000] => pvbus2ambapv.pvbus_s;
+	armcortexm0plusct.pvbus_m => BusDecoder.pvbus_s;
+	Clock100MHz.clk_out => armcortexm0plusct.clk_in;
+	BusDecoder.pvbus_m_range[0x20000000..0x200fffff]  => datamem.pvbus;
+    }
+
+    properties
+    {
+        component_type = "System";
+    }
+    master port<AMBAPV> amba_pv_m;
+    
+}

@@ -1,0 +1,11 @@
+=============================================================================== 
+This file contains details of any applicable specific extensions, limitations 
+or other variations to the terms of the End User License Agreement that 
+accompanies this release of 'Fixed Virtual Platforms(FVPs)'
+===============================================================================
+
+There are no 'Supplementary Terms' applicable to this release of 'Fixed 
+Virtual Platforms(FVPs)'
+
+---------------------------------------------------------------------- 
+END OF FILE: supplementary_terms.txt

@@ -1,0 +1,21 @@
+{
+    "package_id": "hal_m0px1_cache_package",
+    "package_version": "2_0_2022.06.23",
+    "systems": {
+        "m0px1_cache": {
+            "cpu": "Cortex-M0Plus",
+            "compilers": [
+                "GCC",
+                "AC6"
+            ],
+            "applications": [
+                "dhrystone",
+                "hello",
+                "coremark",
+                "whetstone",
+                "matrix-add"
+            ],
+            "assertions": []
+        }
+    }
+}

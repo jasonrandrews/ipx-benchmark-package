@@ -1,0 +1,21 @@
+{
+    "package_id": "hal_m0x1_nocache_package",
+    "package_version": "2_0_2022.06.23",
+    "systems": {
+        "m0x1_nocache": {
+            "cpu": "Cortex-M0",
+            "compilers": [
+                "GCC",
+                "AC6"
+            ],
+            "applications": [
+                "dhrystone",
+                "hello",
+                "coremark",
+                "whetstone",
+                "matrix-add"
+            ],
+            "assertions": []
+        }
+    }
+}

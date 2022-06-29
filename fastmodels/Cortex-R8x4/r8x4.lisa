@@ -1,0 +1,34 @@
+/*
+ * Copyright 2007 ARM Limited. All rights reserved.
+ * Copyright 2008 ARM Limited. All rights reserved.
+ */
+
+component r8x4
+{
+    composition
+    {
+		armcortexr8x4ct : ARMCortexR8x4CT("PERIPHBASE"=0xF5800000,"dic-spi_count"=0x1E0,"MFILTEREN"=1,"MFILTERSTART"=0xE8800000,"MFILTEREND"=0xE8900000,"PFILTERSTART"=0xB0000000,"PFILTEREND"=0xBFF00000,"FPFILTERSTART0"=0xE8000000,"FPFILTEREND0"=0xE8100000,"FPFILTERSTART1"=0xE82000000,"FPFILTEREND1"=0xE83000000,"FPFILTERSTART2"=0xE8400000,"FPFILTEREND2"=0xE8500000,"FPFILTERSTART3"=0xE8600000,"FPFILTEREND3"=0xE8700000,"cpu0.dcache-size"=0x10000,"cpu0.icache-size"=0x10000,"cpu0.itcm_size"=0x400,"cpu0.dtcm_size"=0x400,"cpu1.dcache-size"=0x10000,"cpu1.icache-size"=0x10000,"cpu1.itcm_size"=0x400,"cpu1.dtcm_size"=0x400,"cpu2.dcache-size"=0x10000,"cpu2.icache-size"=0x10000,"cpu2.itcm_size"=0x400,"cpu2.dtcm_size"=0x400,"cpu3.dcache-size"=0x10000,"cpu3.icache-size"=0x10000,"cpu3.itcm_size"=0x400,"cpu3.dtcm_size"=0x400);
+	    pvbus2ambapv : PVBus2AMBAPV();
+	    Memory : RAMDevice();
+        Clock100MHz : ClockDivider(mul=100000000);
+        Clock1Hz : MasterClock();
+        BusDecoder : PVBusDecoder()
+    }
+    
+    connection
+    {
+        Clock1Hz.clk_out => Clock100MHz.clk_in;
+	    BusDecoder.pvbus_m_range[0x0..0x0fffffff] => Memory.pvbus;
+	    pvbus2ambapv.amba_pv_m => self.amba_pv_m;
+	Clock100MHz.clk_out => armcortexr8x4ct.clk_in;
+	armcortexr8x4ct.pvbus_mp => pvbus2ambapv.pvbus_s;
+	armcortexr8x4ct.pvbus_m0 => BusDecoder.pvbus_s;
+    }
+
+    properties
+    {
+        component_type = "System";
+    }
+    master port<AMBAPV> amba_pv_m;
+    
+}

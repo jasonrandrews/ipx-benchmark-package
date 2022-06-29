@@ -1,0 +1,36 @@
+/*
+ * Copyright 2007 ARM Limited. All rights reserved.
+ * Copyright 2008 ARM Limited. All rights reserved.
+ */
+
+component a55x2
+{
+    composition
+    {
+	armcortexa55x2ct : ARMCortexA55x2CT("cpu0.vfp-enable_at_reset"=0,"cpu1.vfp-enable_at_reset"=0);
+        pvbus2ambapv : PVBus2AMBAPV();
+        Memory : RAMDevice();
+        Clock100MHz : ClockDivider(mul=100000000);
+        Clock1Hz : MasterClock();
+        BusDecoder : PVBusDecoder()
+    }
+    
+    connection
+    {
+        Clock1Hz.clk_out => Clock100MHz.clk_in;
+        pvbus2ambapv.amba_pv_m => self.amba_pv_m;
+	Clock100MHz.clk_out => armcortexa55x2ct.clk_in;
+	armcortexa55x2ct.pvbus_m0 => BusDecoder.pvbus_s;
+	BusDecoder.pvbus_m_range[0x0..0xfffffff] => Memory.pvbus;
+	BusDecoder.pvbus_m_range[0x13080000..0x1308ffff] => pvbus2ambapv.pvbus_s;
+	Clock100MHz.clk_out => armcortexa55x2ct.core_clk_in[0];
+	Clock100MHz.clk_out => armcortexa55x2ct.core_clk_in[1];
+    }
+
+    properties
+    {
+        component_type = "System";
+    }
+    master port<AMBAPV> amba_pv_m;
+    
+}

@@ -1,0 +1,34 @@
+/*
+ * Copyright 2007 ARM Limited. All rights reserved.
+ * Copyright 2008 ARM Limited. All rights reserved.
+ */
+
+component r52x1
+{
+    composition
+    {
+		armcortexr52x1ct : ARMCortexR52x1CT("dcache-state_modelled"=1,"icache-state_modelled"=1,"memory.flash_base"=0x10000000,"GICDISABLE"=1,"cpu0.llpp.base"=0xb0000000,"cpu0.llpp.size"=0x400000,"cpu0.tcm.a.size"=0x100000);
+	    pvbus2ambapv : PVBus2AMBAPV();
+	    Memory : RAMDevice();
+        Clock100MHz : ClockDivider(mul=100000000);
+        Clock1Hz : MasterClock();
+        BusDecoder : PVBusDecoder()
+    }
+    
+    connection
+    {
+        Clock1Hz.clk_out => Clock100MHz.clk_in;
+	    BusDecoder.pvbus_m_range[0x0..0x0fffffff] => Memory.pvbus;
+	    pvbus2ambapv.amba_pv_m => self.amba_pv_m;
+	    armcortexr52x1ct.pvbus_core_m[0] => BusDecoder.pvbus_s;
+	    Clock100MHz.clk_out => armcortexr52x1ct.clk_in;
+	    armcortexr52x1ct.llpp_m[0] => pvbus2ambapv.pvbus_s;
+    }
+
+    properties
+    {
+        component_type = "System";
+    }
+    master port<AMBAPV> amba_pv_m;
+    
+}

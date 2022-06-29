@@ -1,0 +1,21 @@
+{
+    "package_id": "hal_a7x4_nic-400_package",
+    "package_version": "2_0_2022.06.23",
+    "systems": {
+        "a7x4_nic-400": {
+            "cpu": "Cortex-A7",
+            "compilers": [
+                "GCC",
+                "AC6"
+            ],
+            "applications": [
+                "hello",
+                "dhrystone",
+                "coremark",
+                "whetstone",
+                "matrix-add"
+            ],
+            "assertions": []
+        }
+    }
+}
