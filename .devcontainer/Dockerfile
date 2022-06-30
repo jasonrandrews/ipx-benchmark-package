@@ -1,2 +1,2 @@
-FROM jasonrandrews/ipx-custom-software:base
+FROM jasonrandrews/ipx-benchmark-package:base
 ENV DEBIAN_FRONTEND=noninteractive
