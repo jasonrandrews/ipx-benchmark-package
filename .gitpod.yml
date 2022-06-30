@@ -1,0 +1,8 @@
+image: jasonrandrews/ipx-custom-software:gitpod
+tasks: 
+  - name: build software
+    init: |
+      cd fastmodels
+      ./buildall.sh
+      
+
