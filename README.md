@@ -17,15 +17,15 @@ There are multiple ways to develop an application.
 ### Option 1: Run a command line container on x86 or Arm:
 
 ```bash
-docker run --rm -it jasonrandrews/ipx-custom-software:base /bin/bash
+docker run --rm -it jasonrandrews/ipx-benchmark-package:base /bin/bash
 ```
 
 ### Option 2: Run a local container with VS Code 
 
-Look [env project](https://github.com/jasonrandrews/env-ipx-custom-software) for more info:
+Look [env project](https://github.com/jasonrandrews/env-ipx-benchmark-package) for more info:
 
 ```bash
-docker run -d -p 80:80 -p 443:443 jasonrandrews/ipx-custom-software
+docker run -d -p 80:80 -p 443:443 jasonrandrews/ipx-benchmark-package
 ```
 
 Open http://localhost/?tkn=7a70e21e-01d0-4f01-969c-700919cc35f6 in your browser
