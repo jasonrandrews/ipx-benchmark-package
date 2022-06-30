@@ -1,4 +1,4 @@
-image: jasonrandrews/ipx-custom-software:gitpod
+image: jasonrandrews/ipx-benchmark-package:gitpod
 tasks: 
   - name: build software
     init: |
