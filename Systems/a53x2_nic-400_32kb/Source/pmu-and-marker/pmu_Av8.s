@@ -11,7 +11,7 @@
 
   .global getPMN
   .type   getPMN, @function
-  // Returns the number of progammable counters
+  // Returns the number of programmable counters
   // uint32_t getPMN(void)
 getPMN:
   MRS     x0, PMCR_EL0

@@ -8,7 +8,7 @@
 #ifndef _V7_PMU_H
 #define _V7_PMU_H
 
-// Returns the number of progammable counters
+// Returns the number of programmable counters
 unsigned int getPMN(void);
 
 // Sets the event for a programmable counter to record

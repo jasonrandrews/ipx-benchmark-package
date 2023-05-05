@@ -13,6 +13,6 @@
 #endif
 
 void EnableCachesEL1();
-void cache_initalize() {
+void cache_initialize() {
 (void)EnableCachesEL1();
 }

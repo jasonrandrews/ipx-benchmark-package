@@ -25,7 +25,7 @@ void start_marker() {
 
 enablePMU();  // Enable PMU
 
-  pmnConfig(0, 0x8, 0);  // Configure counter 0 to count intructions retired
+  pmnConfig(0, 0x8, 0);  // Configure counter 0 to count instructions retired
   pmnConfig(1, 0x1, 0);  // Configure counter 1 to count ICache Miss
   pmnConfig(2, 0x4, 0);  // Configure counter 2 to count DCache Miss
   pmnConfig(3, 0x6, 0);  // Configure counter 3 to count Memory Reads
@@ -60,7 +60,7 @@ void print_marker() {
   printf("\n______________________");
   printf("\n%s:\n\n", PMU_START);
 
-float inst, cycl, cycl_inst;
+float inst, cycle, cycle_inst;
 
   printf("%s: %u\n", PMU_EXEC_INSTRS, readPMN(0));
   printf("%s: %llu\n", PMU_CCNT, readCCNT());
@@ -69,10 +69,10 @@ float inst, cycl, cycl_inst;
   printf("%s: %u\n", PMU_MEM_READS, readPMN(3));
 
   inst = readPMN(0);
-  cycl = readCCNT();
-  cycl_inst = cycl / inst;
+  cycle = readCCNT();
+  cycle_inst = cycle / inst;
 
-  printf("%s: %f\n", PMU_AVE_CPI, cycl_inst);
+  printf("%s: %f\n", PMU_AVE_CPI, cycle_inst);
 // End of printing
   printf("\n%s\n", PMU_END);
   printf("______________________\n");

@@ -1,0 +1,25 @@
+{
+    "package_id": "hal_m55x1-axi4_package",
+    "package_version": "3_8_2023.03.30_1",
+    "systems": {
+        "m55x1-axi4": {
+            "cpu": "Cortex-M55",
+            "compilers": [
+                "AC6",
+                "GCC"
+            ],
+            "applications": [
+                "dhrystone",
+                "hello",
+                "coremark",
+                "whetstone",
+                "matrix-add",
+                "cmsis-dsp-BasicMaths-F32",
+                "cmsis-dsp-BasicMaths-Q31",
+                "cmsis-dsp-Transform-F32",
+                "cmsis-dsp-Transform-Q31"
+            ],
+            "assertions": []
+        }
+    }
+}

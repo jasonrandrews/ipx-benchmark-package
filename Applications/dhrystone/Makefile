@@ -10,7 +10,7 @@ include ../../Systems/$(SYSTEM)/Source/makefile-system.inc
 #########################################################################################
 
 ## Shared defines between compilers
-DEFINES += -DITERATIONS=2
+DEFINES += -DITERATIONS=100
 
 ## AC6
 ifeq ($(COMPILER_TYPE),AC6)

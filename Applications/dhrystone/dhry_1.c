@@ -24,7 +24,9 @@
 extern void start_marker();
 extern void stop_marker();
 
-#define ITERATIONS 2
+#ifndef ITERATIONS
+#define ITERATIONS 100
+#endif
 
 /* Global Variables: */
 

@@ -1,70 +1,122 @@
 /**********************************************************************/
-/*        Copyright (c) 2020 Arm Limited. All rights reserved.        */  
+/*     Copyright (c) 2020,2022 Arm Limited. All rights reserved.      */
 /*                                                                    */
 /*                         IP Selection Sandbox                       */
 /**********************************************************************/
-/* Linker file for Cortex-M33 with GCC                                */
+/* Linker file for Cortex-M3, M4, M33 with GCC                       */
 
 
-STACK_SIZE = 0xa000; /* 4kB of stack memory */
+/*--------------------- Stack / Heap Configuration ----------------------------
+  Stack Size (in Bytes) 0x0-0xFFFFFFFF
+  Heap Size (in Bytes) 0x0-0xFFFFFFFF
+-----------------------------------------------------------------------------*/
+__STACK_SIZE = 0x0000a000;
+__HEAP_SIZE  = 0x00001000;
 
-
+/*
+Set the regions of memory size for CODE and DATA memory
+Limit DATA size to 16MB to match that of the largest possible DTCM
+*/
 MEMORY
 {
-  FLASH (rwx) : ORIGIN = 0x00000000, LENGTH = 0x00100000
-  RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 0x00100000
+  CODE (rx) : ORIGIN = 0x00000000, LENGTH = 0x00100000
+  DATA (rwx) : ORIGIN = 0x20000000, LENGTH = 0x00100000
 }
-
-
 
 SECTIONS
 {
+  /* Send the text and RO data to the CODE memory */
+  .text :
+  {
+    *.o (vectors)
+    *(.text)
+  } > CODE
 
- . = 0x0;
+  .ARM.exidx :
+  {
+    __exidx_start = .;
+    *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+    __exidx_end = .;
+  } > CODE
 
- .text : 
-       {
-              *.o (vectors)
-              *(.text)
-       } > FLASH
+  /*
+  The following code is adapted from the CMSIS M series linker examples
+  Sends the data and bss sections to RAM/DATA and sets up the stack and heap
+  */
+  /*
+   * Location counter can end up 2byte aligned with narrow Thumb code but
+   * __etext is assumed by startup code to be the LMA of a section in RAM
+   * which must be 4byte aligned.
+   */
+  __etext = ALIGN (4); /* Align and mark the region right before data starts as the end of the text */
 
- .data : 
-       { 
-              *(.data)
-       } > FLASH
+  .data : AT (__etext)
+  {
+    __data_start__ = .;
+    *(vtable)
+    *(.data)
+    *(.data.*)
 
- .ARM.exidx : 
-       { 
-              __exidx_start = .;
-             *(.ARM.exidx* .gnu.linkonce.armexidx.*) 
-              __exidx_end = .;
-       } > FLASH
+    . = ALIGN(4);
+    /* preinit data */
+    PROVIDE_HIDDEN (__preinit_array_start = .);
+    KEEP(*(.preinit_array))
+    PROVIDE_HIDDEN (__preinit_array_end = .);
+
+    . = ALIGN(4);
+    /* init data */
+    PROVIDE_HIDDEN (__init_array_start = .);
+    KEEP(*(SORT(.init_array.*)))
+    KEEP(*(.init_array))
+    PROVIDE_HIDDEN (__init_array_end = .);
+
+    . = ALIGN(4);
+    /* finit data */
+    PROVIDE_HIDDEN (__fini_array_start = .);
+    KEEP(*(SORT(.fini_array.*)))
+    KEEP(*(.fini_array))
+    PROVIDE_HIDDEN (__fini_array_end = .);
+
+    KEEP(*(.jcr*))
+    . = ALIGN(4);
+    /* All data end */
+    __data_end__ = .;
+
+  } > DATA
 
  .bss :
-       {
-              . = ALIGN(4);
-              __bss_start__ = .;
-              *(.bss*)
-              *(COMMON)
-              . = ALIGN(4);
-              __bss_end__ = .;
-       } > FLASH
+  {
+    . = ALIGN(4);
+    __bss_start__ = .;
+    *(.bss*)
+    *(COMMON)
+    . = ALIGN(4);
+    __bss_end__ = .;
+  } > DATA AT > DATA
 
- .heap (COPY):
-       {
-              __end__     = .;     /* not neccecary? */
-              __HeapBase  = .;     /* not neccecary? */
-              PROVIDE(end = .);    /* used in v6-m/nofp/libnosys.a -> _sbrk */
-              *(.heap*)
-              __HeapLimit = .;     /* not neccecary? */
-       } > FLASH
+  /* Heap grows up from this point */
+  .heap (COPY) :
+  {
+    . = ALIGN(8);
+    __end__ = .;
+    PROVIDE(end = .);
+    . = . + __HEAP_SIZE;
+    . = ALIGN(8);
+    __HeapLimit = .;
+  } > DATA
 
- . = ALIGN(8);
+  /* Stack grows down from the top of DATA */
+  .stack (ORIGIN(DATA) + LENGTH(DATA) - __STACK_SIZE) (COPY) :
+  {
+    . = ALIGN(8);
+    __StackLimit = .;
+    . = . + __STACK_SIZE;
+    . = ALIGN(8);
+    stack_top  = .;                   /* used in startup code to set vectors to SP */
+    __StackTop = .;
+  } > DATA
+  PROVIDE(__stack = __StackTop);
 
-__StackLimit = .;                  /* not neccecary? */
- . = . + STACK_SIZE; 
- stack_top  = .;                   /* used in startup code to set vectors to SP */
- __StackTop = .;                   /* not neccecary? */
- PROVIDE(__stack = .);             /* not neccecary? */
-
+  /* Check if data + heap + stack exceeds RAM limit */
+  ASSERT(__StackLimit >= __HeapLimit, "Stack and Heap regions collided")
 }

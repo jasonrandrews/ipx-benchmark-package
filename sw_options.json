@@ -2,5 +2,5 @@
 	"software_name": ["my_app1", "my_app2"],
 	"software_description":["my_app_description1", "my_app_description2"],
 	"valid_compilers": ["AC6","GCC"],
-	"valid_systems": ["Enter you system names here"]
+	"valid_systems": ["Enter your system names here"]
 }

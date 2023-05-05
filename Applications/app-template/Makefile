@@ -1,6 +1,9 @@
 #
-# Copyright (c) 2022 Arm Limited. All rights reserved.
+# Copyright (c) 2022-2023 Arm Limited. All rights reserved.
 #
+
+# To build the application with FPU set to off (NO_FPU=1), uncomment the next line
+# NO_FPU=1
 
 # Include the system makefile
 include ../../Systems/$(SYSTEM)/Source/makefile-system.inc

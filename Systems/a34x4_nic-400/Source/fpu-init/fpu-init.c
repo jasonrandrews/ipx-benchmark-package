@@ -5,5 +5,5 @@
 #include "serial.h"
 #include <stdio.h>
 
-void fpu_initalize() {
+void fpu_initialize() {
   }

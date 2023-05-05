@@ -14,7 +14,7 @@ Supported By This System
 
 The names and identifiers of this system and it's supported applications and compilers
 are shown below in the format 'name (identifier)'. The names are for informational
-purposes only, pleaes use the identifiers in all cases.
+purposes only, please use the identifiers in all cases.
 
 Cortex-R52 (r52x1_nic-400)
     Applications:
@@ -25,4 +25,4 @@ Cortex-R52 (r52x1_nic-400)
         matrix-add (matrix-add)
     Compilers:
         GCC, Version 9.2.1-2019.10.25 (GCC)
-        AC6, Version 6.18 (AC6)
+        AC6, Version 6.19 (AC6)

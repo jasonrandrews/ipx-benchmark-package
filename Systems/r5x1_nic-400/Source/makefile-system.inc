@@ -19,7 +19,7 @@ CPU_ASFLAGS  = --cpu=Cortex-R5.sp --thumb
 else ifeq ($(COMPILER),GCC)
 
 CPU_CFLAGS   = -mcpu=cortex-r5 -mfpu=vfpv3xd -mfloat-abi=hard  -mthumb
-CPU_LDFLAGS  = -mcpu=cortex-r5 -mfpu=vfpv3xd -mfloat-abi=hard --entry=ResetHandler -specs=nano.specs
+CPU_LDFLAGS  = -mcpu=cortex-r5 -mfpu=vfpv3xd -mfloat-abi=hard --entry=ResetHandler -specs=nano.specs -u _printf_float
 CPU_ASFLAGS  = -mcpu=cortex-r5 -mfloat-abi=hard -mthumb
 
 else

@@ -8,19 +8,20 @@ include $(SYSTEM_APP)/makefile/makefile-shared.inc
 ## Shared flags between compilers
 SERIAL_DEFINES =
 
+
 ############################################ AC6
 ifeq ($(COMPILER),AC6)
 
-CPU_CFLAGS   = -mcpu=cortex-a55 -march=armv8.4a --target=aarch64-arm-none-eabi
+CPU_CFLAGS   = -mcpu=cortex-r82 -target=aarch64-arm-none-eabi
 CPU_LDFLAGS  = --entry=bootcode --startup=bootcode
-CPU_ASFLAGS  = -mcpu=cortex-a55
+CPU_ASFLAGS  = -mcpu=cortex-r82
 
 ############################################ GCC-A-ELF
 else ifeq ($(COMPILER),GCC)
 
-CPU_CFLAGS   = -march=armv8.3-a -mtune=cortex-a53
-CPU_LDFLAGS  = -march=armv8.3-a -mtune=cortex-a53 --entry=bootcode
-CPU_ASFLAGS  = -march=armv8.3-a -mtune=cortex-a53
+CPU_CFLAGS   = -mcpu=cortex-r82
+CPU_LDFLAGS  = -mcpu=cortex-r82  --entry=bootcode
+CPU_ASFLAGS  = -mcpu=cortex-r82
 
 else
 $(error ERROR: COMPILER variable not valid. Must be either AC6 or GCC. Currently: $(COMPILER) )

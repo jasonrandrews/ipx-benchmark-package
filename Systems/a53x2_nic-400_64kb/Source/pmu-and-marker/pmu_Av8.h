@@ -42,7 +42,7 @@
 #define V8_PMU_EVENT_FILTER_M (1 << 26)
 #define V8_PMU_EVENT_FILTER_ALL_EL (1 << 27)
 
-// Returns the number of progammable counters
+// Returns the number of programmable counters
 unsigned int getPMN(void);
 
 // Sets the event for a programmable counter to record

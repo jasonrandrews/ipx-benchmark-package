@@ -14,7 +14,7 @@ Supported By This System
 
 The names and identifiers of this system and it's supported applications and compilers
 are shown below in the format 'name (identifier)'. The names are for informational
-purposes only, pleaes use the identifiers in all cases.
+purposes only, please use the identifiers in all cases.
 
 Cortex-A53 with 32kb I/D Caches (a53x2_nic-400_32kb)
     Applications:
@@ -24,5 +24,5 @@ Cortex-A53 with 32kb I/D Caches (a53x2_nic-400_32kb)
         whetstone (whetstone)
         matrix-add (matrix-add)
     Compilers:
-        GCC, Version 10.3-2021.07 (GCC)
-        AC6, Version 6.18 (AC6)
+        GCC, Version 11.3.rel1 (GCC)
+        AC6, Version 6.19 (AC6)

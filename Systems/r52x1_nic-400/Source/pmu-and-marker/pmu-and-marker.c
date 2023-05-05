@@ -60,7 +60,7 @@ void print_marker() {
   printf("\n______________________");
   printf("\n%s:\n\n", PMU_START);
 
-float inst, cycl, cycl_inst;
+float inst, cycle, cycle_inst;
 
   printf("%s: %u\n", PMU_EXEC_INSTRS, read_pmn(0));
   printf("%s: %u\n", PMU_CCNT, read_ccnt());
@@ -69,10 +69,10 @@ float inst, cycl, cycl_inst;
   printf("%s: %u\n", PMU_L1_DCACHE_ACCESSES, read_pmn(3));
 
   inst = read_pmn(0);
-  cycl = read_ccnt();
-  cycl_inst = cycl / inst;
+  cycle = read_ccnt();
+  cycle_inst = cycle / inst;
 
-  printf("%s: %f\n", PMU_AVE_CPI, cycl_inst);
+  printf("%s: %f\n", PMU_AVE_CPI, cycle_inst);
 // End of printing
   printf("\n%s\n", PMU_END);
   printf("______________________\n");

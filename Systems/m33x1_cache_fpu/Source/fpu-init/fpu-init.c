@@ -5,7 +5,7 @@
 #include "serial.h"
 #include <stdio.h>
 
-void fpu_initalize() {
+void fpu_initialize() {
   // Enable the FPU in both privileged and user modes by setting bits 20-23 of CPACR to enable CP10 and CP11
   __asm("LDR R0, =0xE000ED88");
   __asm("LDR R1, [R0]");

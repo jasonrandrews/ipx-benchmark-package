@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# shellcheck disable=SC2086,SC2046,SC2006
 # This script builds the specified application for the
 # specified system using the specified  compiler.
 #
@@ -18,7 +18,7 @@ COMPILER_ID=$3
 APP_DEFINES=$4
 
 # Enter the directory containing this file so it can be run from anywhere
-pushd `\dirname ${BASH_SOURCE[0]}` > /dev/null
+pushd $(dirname "${BASH_SOURCE[0]}") > /dev/null
 
 # Mapping of system to cpu
 cpu=`python3 -c "import os, json; print(json.load(open(os.path.join('Systems', '$SYSTEM_ID', 'data.json')))['systems']['$SYSTEM_ID']['cpu'])"`
@@ -27,11 +27,14 @@ if [ $? -eq 1 ]; then
     exit 1
 fi
 
+package_id=`python3 -c "import os, json; print(json.load(open(os.path.join('Systems', '$SYSTEM_ID', 'data.json')))['package_id'])"`
+package_version=`python3 -c "import os, json; print(json.load(open(os.path.join('Systems', '$SYSTEM_ID', 'data.json')))['package_version'])"`
+
 # clean the application built files
-make -C Applications/${APP_ID} APP=${APP_ID} SYSTEM=${SYSTEM_ID} COMPILER=${COMPILER_ID} CPU=${cpu} APP_DEFINES="${APP_DEFINES}" clean
+make -C Applications/${APP_ID} APP=${APP_ID} SYSTEM=${SYSTEM_ID} COMPILER=${COMPILER_ID} GENERATING_PACKAGE_ID=${package_id} GENERATING_PACKAGE_VERSION=${package_version} CPU=${cpu} APP_DEFINES="${APP_DEFINES}" clean
 
 # build the application
-make -C Applications/${APP_ID} APP=${APP_ID} SYSTEM=${SYSTEM_ID} COMPILER=${COMPILER_ID} CPU=${cpu} APP_DEFINES="${APP_DEFINES}"
+make -C Applications/${APP_ID} APP=${APP_ID} SYSTEM=${SYSTEM_ID} COMPILER=${COMPILER_ID} GENERATING_PACKAGE_ID=${package_id} GENERATING_PACKAGE_VERSION=${package_version} CPU=${cpu} APP_DEFINES="${APP_DEFINES}"
 
 # Return to the callers original directory
 popd > /dev/null

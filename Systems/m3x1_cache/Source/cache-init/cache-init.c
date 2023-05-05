@@ -12,5 +12,5 @@
 #define __ISB() __builtin_arm_isb(0xF)
 #endif
 
-void cache_initalize() {
+void cache_initialize() {
 }

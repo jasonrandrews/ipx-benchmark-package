@@ -134,7 +134,8 @@ $(TARGET_APP_DATA):
 		\"compiler\": \"$(COMPILER)\", \
 		\"compiler_dir\": \"$(COMPILER_DIR)\", \
 		\"executable\": \"$(TARGET_APP_NAME)\", \
-		\"package_id\": \"$(GENERATING_PACKAGE_ID)\" \
+		\"package_id\": \"$(GENERATING_PACKAGE_ID)\", \
+		\"package_version\": \"$(GENERATING_PACKAGE_VERSION)\"\
 	} > $@;
 
 # Macros for updating $(TARGET_PAR) ONLY IF the contents of the file will have changed.

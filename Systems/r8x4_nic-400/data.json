@@ -1,6 +1,6 @@
 {
     "package_id": "hal_r8x4_nic-400_package",
-    "package_version": "2_0_2022.06.23",
+    "package_version": "3_9_2023.04.04",
     "systems": {
         "r8x4_nic-400": {
             "cpu": "Cortex-R8",

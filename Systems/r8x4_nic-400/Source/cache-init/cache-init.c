@@ -13,6 +13,6 @@
 #endif
 
 void enable_caches();
-void cache_initalize() {
+void cache_initialize() {
 (void)enable_caches();
 }

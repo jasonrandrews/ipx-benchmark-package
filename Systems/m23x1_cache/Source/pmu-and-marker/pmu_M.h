@@ -14,6 +14,11 @@ void stop_systick(void);
 
 /* DWT Variables */
 #define CM_DWT_CYCCNTENA_BIT (1UL << 0)
+#define CM_DWT_CPIEVTENA_BIT (1UL << 17)
+#define CM_DWT_EXCEVTENA_BIT (1UL << 18)
+#define CM_DWT_SLEEPEVTENA_BIT (1UL << 19)
+#define CM_DWT_LUSEVTENA_BIT (1UL << 20)
+#define CM_DWT_FOLDEVTENA_BIT (1UL << 21)
 #define CM_TRCENA_BIT (1UL << 24)
 
 #define CM_DWT_CONTROL (*((volatile uint32_t*)0xE0001000))

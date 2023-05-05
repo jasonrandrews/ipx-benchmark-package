@@ -1,0 +1,52 @@
+;*********************************************************************
+;         Copyright (c) 2020, 2022 Arm Limited. All rights reserved.
+;
+;                          IP Selection Sandbox
+;*********************************************************************
+;  Linker file for Cortex-M7, M55, M85 with Arm Compiler 6
+
+; Notes about the sizes of ROM/RAM and TCMs
+; This system has two behavioral memories with the following address ranges:
+; * ROM 0x00000000 - 0x0FFFFFFF (Size: 256 MB)
+; * RAM 0x20000000 - 0x2FFFFFFF (Size: 256 MB)
+; Additionally when enabled, the TCMs will overlap the above memory regions
+; depending on the their size as follows:
+; * ITCM 0x00000000 - <size_of_itcm> (Max size is 16 MB so up to 0x01000000)
+; * DTCM 0x00000000 - <size_of_dtcm> (Max size is 16 MB so up to 0x21000000)
+; By default, the TCMs are set at their max size of 16 MB.
+;
+; The max size of the CODE region is set to the size of the ROM. The compiler
+; will only allocate the space actually needed for the application.
+; The size of the DATA region is set to 1 MB. This allows the HEAP (size 1 MB)
+; and STACK (size 40 KB) to fit within the DTCM, which ensures better
+; performance than if they were in RAM.
+;
+; If desired, you may increase the size of the DATA+HEAP+STACK region
+; up to the size of RAM.
+
+LOAD_REGION 0x00000000 0x10000000
+{
+    CODE +0 0x10000000
+    {
+        startup_M.o (vectors, +First)
+        * (InRoot$$$Sections)
+        * (+RO-CODE)
+    }
+
+    DATA 0x20000000 0x00100000
+    {
+        * (+RO-DATA)
+        * (+RW,+ZI)
+    }
+
+    ; Heap region starts at the end of DATA
+    ARM_LIB_HEAP (AlignExpr(+0, 8)) EMPTY 0x00100000
+    {}
+
+    ; Stack grows down from the top of the default DTCM size
+    ; For best performance, we set the stack to start at the top
+    ; of the default DTCM size.
+    ; If desired, you may move the stack out of DTCM and into RAM.
+    ARM_LIB_STACK 0x21000000 ALIGN 64 EMPTY -0x0000a000
+    {}
+}

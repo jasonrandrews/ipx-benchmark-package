@@ -1,6 +1,6 @@
 {
     "package_id": "hal_m4x1_cache_64kb_package",
-    "package_version": "2_0_2022.06.23",
+    "package_version": "3_9_2023.04.04",
     "systems": {
         "m4x1_cache_64kb": {
             "cpu": "Cortex-M4",

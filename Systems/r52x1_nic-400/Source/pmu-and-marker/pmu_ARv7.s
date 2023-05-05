@@ -1,7 +1,7 @@
 // *******************************************************************
-//        Copyright (c) 2020 Arm Limited. All rights reserved.       
-//                                                                   
-//                         IP Selection Sandbox                      
+//        Copyright (c) 2020 Arm Limited. All rights reserved.
+//
+//                         IP Selection Sandbox
 // ******************************************************************
 // PMU functions for Cortex-A/R of an Arm-v7 Architecture
 
@@ -16,12 +16,12 @@
 // ------------------------------------------------------------
 // Performance Monitor Block
 // ------------------------------------------------------------
-  
+
   .balign 8
-  .global getPMN 
+  .global getPMN
   .type getPMN, "function"
   getPMN:
-    // Returns the number of progammable counters
+    // Returns the number of programmable counters
     // uint32_t getPMN(void)
     MRC     p15, 0, r0, c9, c12, 0 // Read PMCR Register
     MOV     r0,r0,LSR#11           // Shift N field down to bit 0
@@ -59,7 +59,7 @@ ccnt_divider:
 
   MCR     p15, 0, r1, c9, c12, 0  // Write PMCR
   BX      lr
-  
+
 
   // ---------------------------------------------------------------
   // Enable/Disable
@@ -75,7 +75,7 @@ enable_pmu:
   ORR     r0, r0, #0x01           // Set E bit
   MCR     p15, 0, r0, c9, c12, 0  // Write PMCR
   BX      lr
-  
+
 
   .balign 8
   .global  disable_pmu
@@ -87,7 +87,7 @@ disable_pmu:
   BIC     r0, r0, #0x01           // Clear E bit
   MCR     p15, 0, r0, c9, c12, 0  // Write PMCR
   BX      lr
-  
+
   .balign 8
   .global  enable_ccnt
   .type enable_ccnt, "function"
@@ -101,7 +101,7 @@ enable_ccnt:
   ORR     r1,r1,r2,LSL #12
   MCR     p15, 0, r1, c14, c15, 7 // write PMCCFILTR
   BX      lr
-  
+
 
   .balign 8
   .global  disable_ccnt
@@ -112,7 +112,7 @@ disable_ccnt:
   MOV     r0, #0x80000000         // Set C bit
   MCR     p15, 0, r0, c9, c12, 2  // Write PMCNTENCLR Register
   BX      lr
-  
+
 
   .balign 8
   .global  enable_pmn
@@ -125,7 +125,7 @@ enable_pmn:
   MOV     r1, r1, LSL r0
   MCR     p15, 0, r1, c9, c12, 1  // Write PMCNTENSET Register
   BX      lr
-  
+
 
   .balign 8
   .global  disable_pmn
@@ -138,7 +138,7 @@ disable_pmn:
   MOV     r1, r1, LSL r0
   MCR     p15, 0, r1, c9, c12, 2  // Write PMCNTENCLR Register
   BX      lr
-  
+
 
   .balign 8
   .global  enable_pmu_user_access
@@ -151,20 +151,20 @@ enable_pmu_user_access:
   MCR     p15, 0, r0, c9, c14, 0  // Write PMUSERENR Register
   ISB                             // Synchronize context
   BX      lr
-  
+
 
   .balign 8
   .global  disable_pmu_user_access
   .type disable_pmu_user_access, "function"
   // Disables User mode access to the PMU (must be called in a privileged mode)
   // void disable_pmu_user_access(void)
-disable_pmu_user_access: 
+disable_pmu_user_access:
   MRC     p15, 0, r0, c9, c14, 0  // Read PMUSERENR Register
   BIC     r0, r0, #0x01           // Clear EN bit (bit 0)
   MCR     p15, 0, r0, c9, c14, 0  // Write PMUSERENR Register
   ISB                             // Synchronize context
   BX      lr
-  
+
 
 
   // ---------------------------------------------------------------
@@ -179,7 +179,7 @@ disable_pmu_user_access:
 read_ccnt:
   MRC     p15, 0, r0, c9, c13, 0 // Read CCNT Register
   BX      lr
-  
+
   .balign 8
   .global  read_pmn
   .type read_pmn, "function"
@@ -192,7 +192,7 @@ read_pmn:
   ISB                            // Synchronize context
   MRC     p15, 0, r0, c9, c13, 2 // Read current PMNx Register
   BX      lr
-  
+
 
 
   // ---------------------------------------------------------------
@@ -210,7 +210,7 @@ pmu_software_increment:
   MOV     r1, r1, LSL r0
   MCR     p15, 0, r1, c9, c12, 4 // Write PMSWINCR Register
   BX      lr
-  
+
 
 
   // ---------------------------------------------------------------
@@ -226,7 +226,7 @@ pmu_software_increment:
 read_flags:
   MRC     p15, 0, r0, c9, c12, 3 // Read PMOVSR Register
   BX      lr
-  
+
   .balign 8
   .global  write_flags
   .type write_flags, "function"
@@ -236,7 +236,7 @@ write_flags:
   MCR     p15, 0, r0, c9, c12, 3 // Write PMOVSR Register
   ISB                            // Synchronize context
   BX      lr
-  
+
 
   .balign 8
   .global  enable_ccnt_irq
@@ -247,7 +247,7 @@ enable_ccnt_irq:
   MOV     r0, #0x80000000
   MCR     p15, 0, r0, c9, c14, 1  // Write PMINTENSET Register
   BX      lr
-  
+
 
   .balign 8
   .global  disable_ccnt_irq
@@ -258,7 +258,7 @@ disable_ccnt_irq:
   MOV     r0, #0x80000000
   MCR     p15, 0, r0, c9, c14, 2   // Write PMINTENCLR Register
   BX      lr
-  
+
 
   .balign 8
   .global  enable_pmn_irq
@@ -271,7 +271,7 @@ enable_pmn_irq:
   MOV     r0, r1, LSL r0
   MCR     p15, 0, r0, c9, c14, 1   // Write PMINTENSET Register
   BX      lr
-  
+
   .balign 8
   .global  disable_pmn_irq
   .type disable_pmn_irq, "function"
@@ -283,7 +283,7 @@ disable_pmn_irq:
   MOV     r0, r1, LSL r0
   MCR     p15, 0, r0, c9, c14, 2  // Write PMINTENCLR Register
   BX      lr
-  
+
 
 
   // ---------------------------------------------------------------
@@ -300,7 +300,7 @@ reset_pmn:
   ORR     r0, r0, #0x2            // Set P bit (Event counter reset)
   MCR     p15, 0, r0, c9, c12, 0  // Write PMCR
   BX      lr
-  
+
   .balign 8
   .global  reset_ccnt
   .type reset_ccnt, "function"
@@ -311,6 +311,6 @@ reset_ccnt:
   ORR     r0, r0, #0x4            // Set C bit (Clock counter reset)
   MCR     p15, 0, r0, c9, c12, 0  // Write PMCR
   BX      lr
-  
+
 
   .end

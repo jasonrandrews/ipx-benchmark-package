@@ -55,6 +55,12 @@ static clock_t start_clock, stop_clock;
 static cyclecount_t cycles;
 static unsigned instructions;
 
+// Declare these function calls to avoid errors with AC6.19
+extern void __reset_cycle_counter();
+extern void __start_cycle_counter();
+extern void __stop_cycle_counter();
+extern cyclecount_t __get_cycle_count();
+
 /* Function : start_time
         This function will be called right before starting the timed portion of the benchmark.
 

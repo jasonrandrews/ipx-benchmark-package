@@ -28,9 +28,9 @@ enable_pmu_user_access();  // Allow access to PMU from User Mode
   enable_pmu();  // Enable the PMU
 
   pmn_config(0, 0x8);   // Configure counter 0 to count instructions retired
-  pmn_config(1, 0x13);  // Configure counter 1 to count memory accesses
 
-  enable_pmn(0);  // Enable counter 0
+ pmn_config(1, 0x13);  // Configure counter 1 to count memory accesses
+ enable_pmn(0);  // Enable counter 0
   enable_pmn(1);  // Enable counter 1
   enable_ccnt();  // Enable CCNT
 
@@ -45,8 +45,7 @@ void stop_marker() {
 disable_ccnt();  // Stop CCNT
   disable_pmn(0);  // Stop counter 0
   disable_pmn(1);  // Stop counter 1
-
-  print_marker();
+print_marker();
 }
 
 // Print results of counters
@@ -54,17 +53,16 @@ void print_marker() {
   printf("\n______________________");
   printf("\n%s:\n\n", PMU_START);
 
-float inst, cycl, cycl_inst;
+float inst, cycle, cycle_inst;
 
-  printf("%s: %u\n", PMU_EXEC_INSTRS, read_pmn(0));
-  printf("%s: %u\n", PMU_CCNT, read_ccnt());
+  inst = (float)read_pmn(0);
+  cycle = (float)read_ccnt();
+  printf("%s: %u\n", PMU_EXEC_INSTRS, (unsigned int)inst);
+  printf("%s: %u\n", PMU_CCNT, (unsigned int)cycle);
   printf("%s: %u\n", PMU_MEM_ACCESSES, read_pmn(1));
+  cycle_inst = cycle / inst;
 
-  inst = read_pmn(0);
-  cycl = read_ccnt();
-  cycl_inst = cycl / inst;
-
-  printf("%s: %f\n", PMU_AVE_CPI, cycl_inst);
+  printf("%s: %f\n", PMU_AVE_CPI, cycle_inst);
 // End of printing
   printf("\n%s\n", PMU_END);
   printf("______________________\n");
